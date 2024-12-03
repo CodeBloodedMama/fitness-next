@@ -17,9 +17,10 @@ export default function ManagerTrainersCreatePage() {
     setLoading(true);
 
     const userId = Math.floor(Math.random() * 1000000); // Generate a random user ID
+    const personalTrainerId = Math.floor(Math.random() * 1000000); // Generate a random personal trainer ID
 
     try {
-      await FitnessAPI.createTrainer({ userId, firstName, lastName, email, password, accountType: 'PersonalTrainer' });
+      await FitnessAPI.createTrainer({ userId, firstName, lastName, email, password, personalTrainerId, accountType: 'personalTrainer' });
       alert('Trainer added successfully!');
       router.push('/dashboard/manager/trainers');
     } catch (error) {

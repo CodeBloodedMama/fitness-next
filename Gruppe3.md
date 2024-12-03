@@ -1,7 +1,13 @@
 {
-  "groupNumber": "36",
-  "prefix": "Eli"
+  "groupNumber": "3",
+  "prefix": "mel"
 }
+
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWFuYWdlciIsIlJvbGUiOiJNYW5hZ2VyIiwiVXNlcklkIjoiNzEiLCJHcm91cElkIjoiODMzMGVlM2ItYzM1Yy00MzIzLWIxZDItZTJhN2M0ZjQ3NGNiIiwibmJmIjoiMTczMzI2NDg0NiIsImV4cCI6IjE3MzMzNTEyNDYifQ.Nm7UAN3I0QS8dc96RTdTBjp7bgeJblhvoAOjcFTfCHI"
+}
+
+
 
 curl -X 'POST' \
   'https://swafe24fitness.azurewebsites.net/api/Group' \

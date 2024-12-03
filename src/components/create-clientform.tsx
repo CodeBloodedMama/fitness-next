@@ -12,20 +12,19 @@ export default function CreateClientForm({ onSuccess }: { onSuccess: () => void 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const userId = Math.floor(Math.random() * 1000000); // Generate a random user ID
     const personalTrainerId = FitnessAPI.getUserIdFromToken();
-    
-
+    if (!personalTrainerId) {
+      setMessage('Failed to get trainer ID');
+      return;
+    }
 
     const client = {
-      userId,
       firstName,
       lastName,
       email,
       password,
-      personalTrainerId,
-      accountType
+      personalTrainerId : personalTrainerId,
+      accountType: 'Client',
     };
 
     try {

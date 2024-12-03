@@ -21,7 +21,6 @@ export type Exercise = {
   };
   
   export type Client = {
-    userId: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -46,21 +45,19 @@ export type Exercise = {
   };
 
   export type Trainer = {
-    userId: number;
     firstName: string;
     lastName: string;
     email: string;
-    personalTrainerId: number;
+    password: string;
     accountType: 'personalTrainer';
   };
 
-  export type NewClient = {
-      userId: number;
-      firstName: string;
+  export type NewClient =
+    {
+      firstName: string,
       lastName: string;
       email: string;
       password: string;
-      personalTrainerId: number;
       accountType: 'Client';
     };
 

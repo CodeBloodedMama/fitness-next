@@ -184,15 +184,7 @@ export class FitnessAPI {
     }
   };
 
-  static async createNewClient(data: {
-    userId: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    personalTrainerId: string;
-    accountType: string;
-  }): Promise<void> {
+  static async createNewClient(data: NewClient): Promise<void> {
     try {
       const response = await fetch(`${API_BASE_URL}/Users`, {
         method: 'POST',
@@ -200,10 +192,12 @@ export class FitnessAPI {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${this.getStoredToken()}`
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({...data, accountType: 'Client'}),
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Failed to create client:', response.status, errorText);
         throw new Error('Failed to create client');
       }
     } catch (error) {
@@ -219,5 +213,4 @@ export class FitnessAPI {
     const decodedToken = JSON.parse(atob(token.split('.')[1]));
     return parseInt(decodedToken.UserId, 10);
   }
-
 };
