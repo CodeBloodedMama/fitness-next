@@ -24,7 +24,7 @@ export default function CreateUserForm({ accountType }: { accountType: string })
     try {
       await FitnessAPI.createTrainer(user);
       setMessage('User created successfully!');
-    } catch (error) {
+    } catch {
       setMessage('Error creating user');
     }
   };

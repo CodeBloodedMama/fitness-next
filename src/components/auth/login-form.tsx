@@ -17,7 +17,7 @@ export function LoginForm() {
     if (role === 'manager') {
       setEmail('mel_boss@fitness.dk');
       setPassword('asdfQWER');
-    } else if (role === 'Client') {
+    } else if (role === 'client') {
       setEmail('mel_c1@fit.dk');
       setPassword('aA');
     } else if (role === 'trainer') {
