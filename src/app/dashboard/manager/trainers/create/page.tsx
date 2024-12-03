@@ -12,7 +12,7 @@ export default function ManagerTrainersCreatePage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  /*const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
@@ -29,7 +29,29 @@ export default function ManagerTrainersCreatePage() {
     } finally {
       setLoading(false);
     }
+  };*/
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+  
+    try {
+      await FitnessAPI.createTrainer({
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      alert('Trainer added successfully!');
+      router.push('/dashboard/manager');
+    } catch (error) {
+      console.error('Error adding trainer:', error);
+      alert('Failed to add trainer');
+    } finally {
+      setLoading(false);
+    }
   };
+  
+  
 
   return (
     <div className="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">

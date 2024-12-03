@@ -17,7 +17,7 @@ export function LoginForm() {
     if (role === 'manager') {
       setEmail('mel_boss@fitness.dk');
       setPassword('asdfQWER');
-    } else if (role === 'client') {
+    } else if (role === 'Client') {
       setEmail('mel_c1@fit.dk');
       setPassword('aA');
     } else if (role === 'trainer') {
@@ -49,7 +49,7 @@ export function LoginForm() {
         router.push('/dashboard/trainer');
       } else if (decodedToken.Role === 'Manager') {
         router.push('/dashboard/manager');
-      } else if (decodedToken.Role === 'Models.Enums.Role.Client') {
+      } else if (decodedToken.Role === 'Client') {
         router.push('/dashboard/client');
       } else {
         router.push('/login');
