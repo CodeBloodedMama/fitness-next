@@ -24,7 +24,6 @@ export class FitnessAPI {
 
   private static async fetch(endpoint: string, options: RequestInit = {}) {
     const token = this.getStoredToken();
-    
     const headers = {
       'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -94,6 +93,7 @@ export class FitnessAPI {
   static isAuthenticated(): boolean {
     return !!this.getStoredToken();
   }
+
   // Get exercises for a programId
   static async addExerciseToProgram(programId: string, exerciseData: Partial<Exercise>) {
     return this.fetch(`/Exercises/Program/${programId}`, {
@@ -111,101 +111,60 @@ export class FitnessAPI {
     return this.fetch('/Exercises');
   }
 
-
-    static async removeExercise(exerciseId: number): Promise<void> {
-    try {
-        // Ensure we're passing a valid number
-        const id = parseInt(exerciseId.toString(), 10);
-        if (isNaN(id)) {
-            throw new Error('Invalid exercise ID');
-        }
-
-        const response = await fetch(`${API_BASE_URL}/Exercises/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${this.getStoredToken()}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to delete exercise: ${response.statusText}`);
-        }
-    } catch (error) {
-        console.error('Error in removeExercise:', error);
-        throw error;
-    }
+  static async removeExercise(exerciseId: number): Promise<void> {
+    await this.fetch(`/Exercises/${exerciseId}`, {
+      method: 'DELETE',
+    });
   }
 
-
-  // get trainers fetch with method and headers
+  // Get trainers
   static async getTrainers(): Promise<Trainer[]> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/Users`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.getStoredToken()}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch trainers');
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching trainers:', error);
-      throw error;
-    }
+    return this.fetch('/Users');
   }
 
-
-  // trainers create POST:
-  static async createTrainer(data: Trainer): Promise<void> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/Users`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.getStoredToken()}`
-        },
-        body: JSON.stringify({ ...data, accountType: 'PersonalTrainer' }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create trainer');
-      }
-
-    } catch (error) {
-      console.error('Error creating trainer:', error);
-      throw error;
-    }
-  };
-
-  static async createNewClient(data: NewClient): Promise<void> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/Users`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.getStoredToken()}`
-        },
-        body: JSON.stringify({...data, accountType: 'Client'}),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Failed to create client:', response.status, errorText);
-        throw new Error('Failed to create client');
-      }
-    } catch (error) {
-      console.error('Error creating client:', error);
-      throw error;
-    }
+  // Create User (Trainer or Client)
+  static async createUser(user: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    accountType: string;
+    personalTrainerId?: number; // Optional, only for clients
+  }): Promise<void> {
+    await this.fetch('/Users', {
+      method: 'POST',
+      body: JSON.stringify(user),
+    });
   }
-  
+
+  static async createTrainer(data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+  }): Promise<void> {
+    const payload = {
+      ...data,
+      accountType: 'PersonalTrainer',
+    };
+    await this.createUser(payload);
+  }
+
+  static async createNewClient(data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    personalTrainerId?: number;
+  }): Promise<void> {
+    const payload = {
+      ...data,
+      accountType: 'Client',
+      personalTrainerId: data.personalTrainerId,
+    };
+    await this.createUser(payload);
+  }
+
   static getUserIdFromToken(): number | null {
     const token = this.getStoredToken();
     if (!token) return null;
@@ -213,4 +172,4 @@ export class FitnessAPI {
     const decodedToken = JSON.parse(atob(token.split('.')[1]));
     return parseInt(decodedToken.UserId, 10);
   }
-};
+}
