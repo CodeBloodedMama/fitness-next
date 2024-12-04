@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { FitnessAPI } from '@/lib/api/fitness-api';
 
-export default function CreateClientForm({ onSuccess }: { onSuccess: () => void }) {
+export default function CreateClientForm({ onSuccessAction }: { onSuccessAction: () => void }) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -30,7 +30,7 @@ export default function CreateClientForm({ onSuccess }: { onSuccess: () => void 
     try {
       await FitnessAPI.createNewClient(client);
       setMessage('Client created successfully!');
-      onSuccess();
+      onSuccessAction();
     } catch {
       setMessage('Error creating client');
     }

@@ -1,4 +1,4 @@
-type CreateExerciseData = Omit<Exercise, 'exerciseId' | 'groupId' | 'workoutProgramId' | 'personalTrainerId'>;
+//type CreateExerciseData = Omit<Exercise, 'exerciseId' | 'groupId' | 'workoutProgramId' | 'personalTrainerId'>;
 
 import React, { useState, useEffect } from 'react';
 import { Exercise } from '@/lib/types';
@@ -21,14 +21,18 @@ export function ExerciseManager({
 
   const loadExercises = async () => {
     try {
-      const data = await FitnessAPI.getUnassignedExercises();
-      setExercises(data);
+
+      const exerciseData = await FitnessAPI.getUnassignedExercises();
+      setExercises(exerciseData);
     } catch (error) {
       console.error('Error loading exercises:', error);
     } finally {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    loadExercises();
+  },[]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

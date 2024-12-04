@@ -14,7 +14,7 @@ export default function CreateClientPage() {
   return (
     <div className="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">
       <h1 className="text-3xl font-semibold text-gray-900 mb-6">Create New Client</h1>
-      <CreateClientForm onSuccess={handleSuccess} />
+      <CreateClientForm onSuccessAction={handleSuccess} />
     </div>
   );
 }

@@ -5,9 +5,6 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FitnessAPI } from '@/lib/api/fitness-api';
 import { Program } from '@/lib/types';
-import Link from 'next/link';
-
-type ViewMode = 'program' | 'exercises';
 
 export default function ProgramPage({ 
   params 

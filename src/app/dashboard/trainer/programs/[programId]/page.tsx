@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FitnessAPI } from '@/lib/api/fitness-api';
 import { Program, Exercise } from '@/lib/types';
@@ -25,10 +24,10 @@ export default function ProgramPage({
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>('program');
   const [showNewExerciseForm, setShowNewExerciseForm] = useState(false);
-  const router = useRouter();
 
-  const fetchData = async () => {
+  const fetchData = React.useCallback(async () => {
     try {
+      setLoading(true);
       const [programData, exercisesData] = await Promise.all([
         FitnessAPI.getProgramById(programId),
         FitnessAPI.getAllExercises()
@@ -45,22 +44,23 @@ export default function ProgramPage({
     } finally {
       setLoading(false);
     }
-  };
+  }, [programId]);
 
   useEffect(() => {
     fetchData();
-  }, [programId]);
+  }, [programId, fetchData]);
 
   const handleExerciseSelect = async (exercise: Exercise) => {
     try {
       await FitnessAPI.addExerciseToProgram(programId, {
-        name: exercise.name,
-        description: exercise.description,
-        sets: exercise.sets,
-        repetitions: exercise.repetitions,
-        time: exercise.time
+      name: exercise.name,
+      description: exercise.description,
+      sets: exercise.sets,
+      repetitions: exercise.repetitions,
+      time: exercise.time
       });
-      
+
+      setSelectedExercises(prevSelected => [...prevSelected, exercise]);
       fetchData();
       alert('Exercise added successfully!');
     } catch (error) {
