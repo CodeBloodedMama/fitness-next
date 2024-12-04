@@ -1,4 +1,4 @@
-import { Program, Client, LoginCredentials, CreateProgramData, Exercise, Trainer, NewClient } from '@/lib/types';
+import { Program, Client, LoginCredentials, CreateProgramData, Exercise, Trainer } from '@/lib/types';
 
 const API_BASE_URL = 'https://swafe24fitness.azurewebsites.net/api';
 
