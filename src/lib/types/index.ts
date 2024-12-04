@@ -26,6 +26,7 @@ export type Exercise = {
     email: string;
     accountType: string;
     personalTrainerId?: string;
+    userId: number;
   };
   
   export type LoginCredentials = {
@@ -45,6 +46,7 @@ export type Exercise = {
   };
 
   export type Trainer = {
+    userId: number;
     firstName: string;
     lastName: string;
     email: string;

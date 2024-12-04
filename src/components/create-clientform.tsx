@@ -31,7 +31,7 @@ export default function CreateClientForm({ onSuccess }: { onSuccess: () => void 
       await FitnessAPI.createNewClient(client);
       setMessage('Client created successfully!');
       onSuccess();
-    } catch (error) {
+    } catch {
       setMessage('Error creating client');
     }
   };

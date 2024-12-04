@@ -85,20 +85,6 @@ export default function CreateUserForm({ accountType }: { accountType: string })
         </div>
       )}
       <div>
-  <label htmlFor="accountType" className="block text-sm font-medium text-gray-700">
-    Account Type
-  </label>
-  <select
-    id="accountType"
-    value={accountType}
-    onChange={(e) => setAccountType(e.target.value)}
-    required
-    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-  >
-    <option value="">Select Account Type</option>
-    <option value="PersonalTrainer">Personal Trainer</option>
-    <option value="Client">Client</option>
-  </select>
 </div>
 
       
